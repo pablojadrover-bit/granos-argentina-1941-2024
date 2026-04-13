@@ -681,10 +681,28 @@ footer a {
     font-size: 40px;
   }
 
-  .tabs {
-    padding: 16px;
-    gap: 4px;
-  }
+ // TAB SWITCHING CORREGIDO
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const tabId = this.getAttribute('data-tab');
+    
+    // Quita la clase activa de todos
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    // Activa el botón y contenido correspondiente
+    this.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+
+    // ARREGLO PARA GRÁFICOS: Si entra a la pestaña 2, los reacomoda
+    if (tabId === 'tab2') {
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+        initChartsTab2();
+      }, 150); 
+    }
+  });
+});
 
   .tab-btn {
     padding: 8px 12px;
